@@ -1,16 +1,70 @@
+<h1>Top 10 of the Day</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Source</th>
+      <th>Title</th>
+      <th>Total Views</th>
+      <th>Twitter shares</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @articles.each_with_index do |article,index| %>
+      <tr>
+        <td class="td-center"><%= index + 1 %></td>
+        <td class="td-center"><%= article.source %></td>
+        <td><%= link_to "#{article.title}", article.url %></td>
+        <td class="td-center"><%= article.total_views %></td>
+        <td class="td-center"><%= article.tw_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 <h1>Top 5 on Coin Telegraph</h1>
-<% @top_cointelegraph.each do |top_cointelegraph| %>
-<div>
-  <%=top_cointelegraph.source %>
-  <%=link_to "#{top_cointelegraph.title}", top_cointelegraph.url  %>
-  <%=top_cointelegraph.total_views  %> total_views
-</div>
-<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Source</th>
+      <th>Title</th>
+      <th>Total Views</th>
+      <th>Twitter shares</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @top_cointelegraph.each_with_index do |top_cointelegraph,index| %>
+      <tr>
+        <td class="td-center"><%= index + 1 %></td>
+        <td class="td-center"><%= top_cointelegraph.source %></td>
+        <td><%= link_to "#{top_cointelegraph.title}", top_cointelegraph.url %></td>
+        <td class="td-center"><%= top_cointelegraph.total_views %></td>
+        <td class="td-center"><%= top_cointelegraph.tw_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 <h1>Top 5 on Bitcoin.com</h1>
-<% @top_bitcoin.each do |top_bitcoin| %>
-<div>
-  <%=top_bitcoin.source %>
-  <%=link_to "#{top_bitcoin.title}", top_bitcoin.url  %>
-  <%=top_bitcoin.total_views  %> total views
-</div>
-<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Source</th>
+      <th>Title</th>
+      <th>Total Views</th>
+      <th>Twitter shares</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @top_bitcoin.each_with_index do |top_bitcoin,index| %>
+      <tr>
+        <td class="td-center"><%= index + 1 %></td>
+        <td class="td-center"><%= top_bitcoin.source %></td>
+        <td><%= link_to "#{top_bitcoin.title}", top_bitcoin.url %></td>
+        <td class="td-center"><%= top_bitcoin.total_views %></td>
+        <td class="td-center"><%= top_bitcoin.tw_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
