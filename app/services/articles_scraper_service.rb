@@ -52,7 +52,7 @@ class ArticlesScraperService
       tags: article_tags,
       total_views: @total_views
       )
-      article.save!
+      article.save! if article.publication_date == Date.today
     end
   end
 
@@ -98,7 +98,7 @@ class ArticlesScraperService
         tw_count: @tw_count,
         total_views: @total_views
       )
-      article.save!
+      article.save! if article.publication_date == Date.today
     end
   end
 
