@@ -12,7 +12,4 @@ class ArticlesScraperJob < ApplicationJob
     articles_scraper.perform
   end
 
-  # def article_generator(bitcoin_articles, coindesk_articles, cointelegraph_articles)
-
-  # end
 end

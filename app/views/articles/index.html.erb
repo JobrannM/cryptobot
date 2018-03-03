@@ -1,7 +1,16 @@
-<% @articles.each do |article| %>
+<h1>Top 3 on Coin Telegraph</h1>
+<% @top_cointelegraph.each do |top_cointelegraph| %>
 <div>
-  <%=article.title  %>
-  <%=article.author  %>
-  <%= article.publication_date %>
+  <%=top_cointelegraph.source %>
+  <%=link_to "#{top_cointelegraph.title}", top_cointelegraph.url  %>
+  <%=top_cointelegraph.total_views  %> total_views
+</div>
+<% end %>
+<h1>Top 3 on Bitcoin.com</h1>
+<% @top_bitcoin.each do |top_bitcoin| %>
+<div>
+  <%=top_bitcoin.source %>
+  <%=link_to "#{top_bitcoin.title}", top_bitcoin.url  %>
+  <%=top_bitcoin.total_views  %> total views
 </div>
 <% end %>

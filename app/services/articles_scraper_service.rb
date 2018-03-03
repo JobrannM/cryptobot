@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 
+
 class ArticlesScraperService
   attr_accessor :urls_to_scrape, :article_tags, :bitcoin_articles, :coindesk_articles, :cointelegraph_articles
 
@@ -34,13 +35,13 @@ class ArticlesScraperService
         @author = element.text.strip
       end
       html_doc.search('.btc-post-meta .td-post-views span').each do |element|
-        @total_views = element.text.strip
+        @total_views = element.text.strip.to_i
       end
       html_doc.search('.post .td-post-source-tags a').each do |element|
         article_tags << element.text.strip
       end
       html_doc.search("meta[itemprop='datePublished']").each do |element|
-        @publication_date = element.attribute('content').value
+        @publication_date = Date.parse(element.attribute('content').value).to_date
       end
       article = Article.new(
       source: "Bitcoin.com",
@@ -58,9 +59,9 @@ class ArticlesScraperService
   def cointelegraph
     urls_to_scrape = []
     cointelegraph_articles = []
-    html_doc = Nokogiri::HTML(open("https://cointelegraph.com/category/latest").read)
+    html_doc = Nokogiri::HTML(open("https://cointelegraph.com/").read)
     #scrape all URLs from shown articles
-    html_doc.search('.post .image a').each do |element|
+    html_doc.search('.posts .post .image a').each do |element|
       urls_to_scrape << element.attribute('href').value
     end
 
@@ -68,7 +69,7 @@ class ArticlesScraperService
       article_tags = []
       html_doc = Nokogiri::HTML(open(url).read)
       html_doc.search('.post-area').each do |element|
-        @title = element.attribute('data-title').value,
+        @title = element.attribute('data-title').value
         @fb_count = element.attribute('data-fb-count').value
         @red_count = element.attribute('data-reddit-count').value
         @tw_count = element.attribute('data-tw-count').value
@@ -77,14 +78,13 @@ class ArticlesScraperService
         @author = element.text.strip
       end
       html_doc.search('.date').each do |element|
-        @publication_date = element.attribute('datetime').value
+        @publication_date = Date.parse(element.attribute('datetime').value).to_date
       end
       html_doc.search('.tags a').each do |element|
-        tag = element.text.strip
-        article_tags << tag
+        article_tags << element.text.strip
       end
       html_doc.search('.total-views .total-qty').each do |element|
-        @total_views = element.text.strip
+        @total_views = element.text.strip.to_i
       end
       article = Article.new(
         source: "Coin Telegraph",
