@@ -3,7 +3,7 @@ require 'nokogiri'
 
 
 class ArticlesScraperService
-  attr_accessor :urls_to_scrape, :article_tags, :bitcoin_articles, :coindesk_articles, :cointelegraph_articles
+  attr_accessor :urls_to_scrape, :article_tags
 
   def initialize
   end
@@ -18,7 +18,6 @@ class ArticlesScraperService
 
   def bitcoin
     urls_to_scrape = []
-    bitcoin_articles = []
     html_doc = Nokogiri::HTML(open('https://news.bitcoin.com/').read)
 
     html_doc.search('.td-big-grid-post .entry-title a, .td_module_mx16 .td-module-title a, .td_module_mx1 .entry-title a').each do |element|
@@ -58,7 +57,6 @@ class ArticlesScraperService
 
   def cointelegraph
     urls_to_scrape = []
-    cointelegraph_articles = []
     html_doc = Nokogiri::HTML(open("https://cointelegraph.com/").read)
     #scrape all URLs from shown articles
     html_doc.search('.posts .post .image a').each do |element|
@@ -104,7 +102,6 @@ class ArticlesScraperService
 
   def coindesk
     urls_to_scrape = []
-    coindesk_articles = []
     html_doc = Nokogiri::HTML(open("https://www.coindesk.com").read)
 
     html_doc.search('.article-featured a').each do |element|
