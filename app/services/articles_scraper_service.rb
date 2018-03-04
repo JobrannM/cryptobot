@@ -11,17 +11,30 @@ class ArticlesScraperService
   def perform
     bitcoin
     cointelegraph
-  #   coindesk
+    #   coindesk
   end
 
   private
 
+
+  def find_articles_to_skip(source_to_match)
+    @articles_to_skip = []
+    Article.where(source: source_to_match).where(publication_date: 2.days.ago..Date.today).each do |article|
+      @articles_to_skip << article.url
+    end
+    @articles_to_skip
+  end
+
   def bitcoin
+    find_articles_to_skip("Bitcoin.com")
     urls_to_scrape = []
     html_doc = Nokogiri::HTML(open('https://news.bitcoin.com/').read)
 
-    html_doc.search('.td-big-grid-post .entry-title a, .td_module_mx16 .td-module-title a, .td_module_mx1 .entry-title a').each do |element|
-      urls_to_scrape << element.attribute('href').value
+    html_doc.search('.entry-title a').each do |element|
+      article_url = element.attribute('href').value
+      if @articles_to_skip.find_index(article_url).nil?
+        urls_to_scrape << article_url
+      end
     end
 
     urls_to_scrape.each do |url|
@@ -51,16 +64,20 @@ class ArticlesScraperService
       tags: article_tags,
       total_views: @total_views
       )
-      article.save! if article.publication_date == Date.today
+      article.save!
     end
   end
 
   def cointelegraph
+    find_articles_to_skip("Coin Telegraph")
     urls_to_scrape = []
     html_doc = Nokogiri::HTML(open("https://cointelegraph.com/").read)
     #scrape all URLs from shown articles
     html_doc.search('.posts .post .image a').each do |element|
-      urls_to_scrape << element.attribute('href').value
+      article_url = element.attribute('href').value
+      if @articles_to_skip.find_index(article_url).nil?
+        urls_to_scrape << article_url
+      end
     end
 
     urls_to_scrape.each do |url|
@@ -70,7 +87,7 @@ class ArticlesScraperService
         @title = element.attribute('data-title').value
         @fb_count = element.attribute('data-fb-count').value
         @red_count = element.attribute('data-reddit-count').value
-        @tw_count = element.attribute('data-tw-count').value
+        @tw_count = element.attribute('data-tw-count').value.to_i
       end
       html_doc.search('.name a').each do |element|
         @author = element.text.strip
@@ -96,7 +113,7 @@ class ArticlesScraperService
         tw_count: @tw_count,
         total_views: @total_views
       )
-      article.save! if article.publication_date == Date.today
+      article.save!
     end
   end
 

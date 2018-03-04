@@ -1,0 +1,72 @@
+<div class="container">
+  <%= link_to "All Articles", articles_path %>
+  <h1>Top 10 of the Day (<%= (Date.today).strftime("%a, %b %d" ) %>)</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Source</th>
+        <th>Title</th>
+        <th>Total Views</th>
+        <th>Twitter shares</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @articles.each_with_index do |article,index| %>
+        <tr>
+          <td class="text-center"><%= index + 1 %></td>
+          <td class="text-center"><%= article.source %></td>
+          <td><%= link_to "#{article.title}", article.url %></td>
+          <td class="text-center"><%= article.total_views %></td>
+          <td class="text-center"><%= article.tw_count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <h1>Top 5 on Coin Telegraph</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Source</th>
+        <th>Title</th>
+        <th>Total Views</th>
+        <th>Twitter shares</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @top_cointelegraph.each_with_index do |top_cointelegraph,index| %>
+        <tr>
+          <td class="text-center"><%= index + 1 %></td>
+          <td class="text-center"><%= top_cointelegraph.source %></td>
+          <td><%= link_to "#{top_cointelegraph.title}", top_cointelegraph.url %></td>
+          <td class="text-center"><%= top_cointelegraph.total_views %></td>
+          <td class="text-center"><%= top_cointelegraph.tw_count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <h1>Top 5 on Bitcoin.com</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Source</th>
+        <th>Title</th>
+        <th>Total Views</th>
+        <th>Twitter shares</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @top_bitcoin.each_with_index do |top_bitcoin,index| %>
+        <tr>
+          <td class="text-center"><%= index + 1 %></td>
+          <td class="text-center"><%= top_bitcoin.source %></td>
+          <td><%= link_to "#{top_bitcoin.title}", top_bitcoin.url %></td>
+          <td class="text-center"><%= top_bitcoin.total_views %></td>
+          <td class="text-center"><%= top_bitcoin.tw_count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
