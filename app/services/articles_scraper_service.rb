@@ -10,9 +10,9 @@ class ArticlesScraperService
   end
 
   def perform
-    # bitcoin
-    # cointelegraph
-       coindesk
+    bitcoin
+    cointelegraph
+    coindesk
   end
 
   private
@@ -127,7 +127,6 @@ class ArticlesScraperService
         urls_to_scrape << article_url
       end
     end
-    p urls_to_scrape
 
     html_doc.search('.picture a').each do |element|
       article_url = element.attribute('href').value
@@ -135,7 +134,6 @@ class ArticlesScraperService
         urls_to_scrape << article_url
       end
     end
-    p urls_to_scrape
 
     browser = Watir::Browser.new :chrome, headless: true
     urls_to_scrape.each do |url|
