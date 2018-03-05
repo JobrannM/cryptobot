@@ -12,8 +12,8 @@ class ArticlesScraperService
 
   def perform
     bitcoin
-    #cointelegraph
-    #coindesk
+    cointelegraph
+    coindesk
   end
 
   private
@@ -25,7 +25,6 @@ class ArticlesScraperService
       @articles_to_skip << article.url
     end
     @articles_to_skip
-    binding.pry
   end
 
   def bitcoin
@@ -39,7 +38,6 @@ class ArticlesScraperService
         urls_to_scrape << article_url
       end
     end
-    binding.pry
 
     urls_to_scrape.each do |url|
       article_tags = []
