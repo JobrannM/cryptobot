@@ -139,6 +139,7 @@ class ArticlesScraperService
       end
     end
 
+    Selenium::WebDriver::Chrome.driver_path = ENV['GOOGLE_CHROME_SHIM']
     browser = Watir::Browser.new :chrome, headless: true
     urls_to_scrape.each do |url|
       article_tags = []
