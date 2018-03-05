@@ -69,4 +69,27 @@
       <% end %>
     </tbody>
   </table>
+  <h1>Top 5 on CoinDesk</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Source</th>
+        <th>Title</th>
+        <th>Total Views</th>
+        <th>Twitter shares</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @top_coindesk.each_with_index do |top_coindesk,index| %>
+        <tr>
+          <td class="text-center"><%= index + 1 %></td>
+          <td class="text-center"><%= top_coindesk.source %></td>
+          <td><%= link_to "#{top_coindesk.title}", top_coindesk.url %></td>
+          <td class="text-center"><%= top_coindesk.total_views %></td>
+          <td class="text-center"><%= top_coindesk.tw_count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
