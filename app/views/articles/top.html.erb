@@ -18,8 +18,8 @@
           <td class="text-center"><%= index + 1 %></td>
           <td class="text-center"><%= article.source %></td>
           <td><%= link_to "#{article.title}", article.url %></td>
-          <td class="text-center"><%= article.total_views %></td>
-          <td class="text-center"><%= article.tw_count %></td>
+          <td class="text-center"><%= number_with_delimiter(article.total_views, locale: :fr) %></td>
+          <td class="text-center"><%= number_with_delimiter(article.tw_count, locale: :fr) %></td>
           <td class="text-center"><%= (article.publication_date).strftime("%H:%M") %></td>
           <td class="text-center"><%= raw article.tag_list.map { |t| link_to t, tag_path(t), class:
             'tag_link' }.join(' ')%></td>
@@ -44,8 +44,8 @@
         <tr>
           <td class="text-center"><%= index + 1 %></td>
           <td><%= link_to "#{top_cointelegraph.title}", top_cointelegraph.url %></td>
-          <td class="text-center"><%= top_cointelegraph.total_views %></td>
-          <td class="text-center"><%= top_cointelegraph.tw_count %></td>
+          <td class="text-center"><%= number_with_delimiter(top_cointelegraph.total_views, locale: :fr) %></td>
+          <td class="text-center"><%= number_with_delimiter(top_cointelegraph.tw_count, locale: :fr) %></td>
           <td class="text-center"><%= (top_cointelegraph.publication_date).strftime("%H:%M") %></td>
           <td class="text-center"><%= raw top_cointelegraph.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
@@ -59,6 +59,7 @@
         <th>Rank</th>
         <th>Title</th>
         <th><i class="fas fa-eye"></i></th>
+        <th><i class="fab fa-twitter"></i></th>
         <th><i class="fas fa-clock"></i></th>
         <th><i class="fas fa-tags"></i></th>
       </tr>
@@ -68,7 +69,8 @@
         <tr>
           <td class="text-center"><%= index + 1 %></td>
           <td><%= link_to "#{top_bitcoin.title}", top_bitcoin.url %></td>
-          <td class="text-center"><%= top_bitcoin.total_views %></td>
+          <td class="text-center"><%= number_with_delimiter(top_bitcoin.total_views, locale: :fr) %></td>
+          <td class="text-center"><%= number_with_delimiter(top_bitcoin.tw_count, locale: :fr) %></td>
           <td class="text-center"><%= (top_bitcoin.publication_date).strftime("%H:%M") %></td>
           <td class="text-center"><%= raw top_bitcoin.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
@@ -81,6 +83,7 @@
       <tr>
         <th>Rank</th>
         <th>Title</th>
+        <th><i class="fas fa-eye"></i></th>
         <th><i class="fab fa-twitter"></i></th>
         <th><i class="fas fa-clock"></i></th>
         <th><i class="fas fa-tags"></i></th>
@@ -91,7 +94,8 @@
         <tr>
           <td class="text-center"><%= index + 1 %></td>
           <td><%= link_to "#{top_coindesk.title}", top_coindesk.url %></td>
-          <td class="text-center"><%= top_coindesk.tw_count %></td>
+          <td class="text-center"><%= number_with_delimiter(top_coindesk.total_views, locale: :fr) %></td>
+          <td class="text-center"><%= number_with_delimiter(top_coindesk.tw_count, locale: :fr) %></td>
           <td class="text-center"><%= (top_coindesk.publication_date).strftime("%H:%M") %></td>
           <td class="text-center"><%= raw top_coindesk.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
