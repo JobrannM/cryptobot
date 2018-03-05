@@ -9,11 +9,12 @@ ruby '2.3.5'
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass' # Bootstrap v3
 gem 'font-awesome-sass'
-gem 'faker'
+# gem 'faker'
 gem 'jquery-rails'
 gem 'watir', '~> 6.10', '>= 6.10.3'
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'pry'
+gem 'chromedriver-helper'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Use postgresql as the database for Active Record
