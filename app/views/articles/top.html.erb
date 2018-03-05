@@ -1,14 +1,15 @@
 <div class="container">
-  <%= link_to "All Articles", articles_path %>
-  <h1>Top 10 of the Day (<%= (Date.today).strftime("%a, %b %d" ) %>)</h1>
+  <h1 class="text-center">Top 10 of the Day (<%= (Date.today).strftime("%a, %b %d" ) %>)</h1>
   <table>
     <thead>
       <tr>
         <th>Rank</th>
         <th>Source</th>
         <th>Title</th>
-        <th>Total Views</th>
-        <th>Twitter shares</th>
+        <th><i class="fas fa-eye"></i></th>
+        <th><i class="fab fa-twitter"></i></th>
+        <th><i class="fas fa-clock"></i></th>
+        <th><i class="fas fa-tags"></i></th>
       </tr>
     </thead>
     <tbody>
@@ -17,77 +18,86 @@
           <td class="text-center"><%= index + 1 %></td>
           <td class="text-center"><%= article.source %></td>
           <td><%= link_to "#{article.title}", article.url %></td>
-          <td class="text-center"><%= article.total_views %></td>
-          <td class="text-center"><%= article.tw_count %></td>
+          <td class="text-center"><%= number_with_delimiter(article.total_views, locale: :fr) %></td>
+          <td class="text-center"><%= number_with_delimiter(article.tw_count, locale: :fr) %></td>
+          <td class="text-center"><%= (article.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= raw article.tag_list.map { |t| link_to t, tag_path(t), class:
+            'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <h1>Top 5 on Coin Telegraph</h1>
+  <h1 class="text-center">Top 5 on Coin Telegraph</h1>
   <table>
     <thead>
       <tr>
         <th>Rank</th>
-        <th>Source</th>
         <th>Title</th>
-        <th>Total Views</th>
-        <th>Twitter shares</th>
+        <th><i class="fas fa-eye"></i></th>
+        <th><i class="fab fa-twitter"></i></th>
+        <th><i class="fas fa-clock"></i></th>
+        <th><i class="fas fa-tags"></i></th>
       </tr>
     </thead>
     <tbody>
       <% @top_cointelegraph.each_with_index do |top_cointelegraph,index| %>
         <tr>
           <td class="text-center"><%= index + 1 %></td>
-          <td class="text-center"><%= top_cointelegraph.source %></td>
           <td><%= link_to "#{top_cointelegraph.title}", top_cointelegraph.url %></td>
-          <td class="text-center"><%= top_cointelegraph.total_views %></td>
-          <td class="text-center"><%= top_cointelegraph.tw_count %></td>
+          <td class="text-center"><%= number_with_delimiter(top_cointelegraph.total_views, locale: :fr) %></td>
+          <td class="text-center"><%= number_with_delimiter(top_cointelegraph.tw_count, locale: :fr) %></td>
+          <td class="text-center"><%= (top_cointelegraph.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= raw top_cointelegraph.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <h1>Top 5 on Bitcoin.com</h1>
+  <h1 class="text-center">Top 5 on Bitcoin.com</h1>
   <table>
     <thead>
       <tr>
         <th>Rank</th>
-        <th>Source</th>
         <th>Title</th>
-        <th>Total Views</th>
-        <th>Twitter shares</th>
+        <th><i class="fas fa-eye"></i></th>
+        <th><i class="fab fa-twitter"></i></th>
+        <th><i class="fas fa-clock"></i></th>
+        <th><i class="fas fa-tags"></i></th>
       </tr>
     </thead>
     <tbody>
       <% @top_bitcoin.each_with_index do |top_bitcoin,index| %>
         <tr>
           <td class="text-center"><%= index + 1 %></td>
-          <td class="text-center"><%= top_bitcoin.source %></td>
           <td><%= link_to "#{top_bitcoin.title}", top_bitcoin.url %></td>
-          <td class="text-center"><%= top_bitcoin.total_views %></td>
-          <td class="text-center"><%= top_bitcoin.tw_count %></td>
+          <td class="text-center"><%= number_with_delimiter(top_bitcoin.total_views, locale: :fr) %></td>
+          <td class="text-center"><%= number_with_delimiter(top_bitcoin.tw_count, locale: :fr) %></td>
+          <td class="text-center"><%= (top_bitcoin.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= raw top_bitcoin.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <h1>Top 5 on CoinDesk</h1>
+  <h1 class="text-center">Top 5 on CoinDesk</h1>
   <table>
     <thead>
       <tr>
         <th>Rank</th>
-        <th>Source</th>
         <th>Title</th>
-        <th>Total Views</th>
-        <th>Twitter shares</th>
+        <th><i class="fas fa-eye"></i></th>
+        <th><i class="fab fa-twitter"></i></th>
+        <th><i class="fas fa-clock"></i></th>
+        <th><i class="fas fa-tags"></i></th>
       </tr>
     </thead>
     <tbody>
       <% @top_coindesk.each_with_index do |top_coindesk,index| %>
         <tr>
           <td class="text-center"><%= index + 1 %></td>
-          <td class="text-center"><%= top_coindesk.source %></td>
           <td><%= link_to "#{top_coindesk.title}", top_coindesk.url %></td>
-          <td class="text-center"><%= top_coindesk.total_views %></td>
-          <td class="text-center"><%= top_coindesk.tw_count %></td>
+          <td class="text-center"><%= number_with_delimiter(top_coindesk.total_views, locale: :fr) %></td>
+          <td class="text-center"><%= number_with_delimiter(top_coindesk.tw_count, locale: :fr) %></td>
+          <td class="text-center"><%= (top_coindesk.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= raw top_coindesk.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>

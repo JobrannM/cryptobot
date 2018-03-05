@@ -1,6 +1,8 @@
 require 'open-uri'
 require 'nokogiri'
 require 'watir'
+require 'date'
+require 'pry'
 
 class ArticlesScraperService
   attr_accessor :urls_to_scrape, :article_tags
@@ -19,9 +21,10 @@ class ArticlesScraperService
 
   def find_articles_to_skip(source_to_match)
     @articles_to_skip = []
-    Article.where(source: source_to_match).where(publication_date: 7.days.ago..Date.today).each do |article|
+    Article.where(source: source_to_match).where(created_at: DateTime.now-5..DateTime.now).each do |article|
       @articles_to_skip << article.url
     end
+    @articles_to_skip
   end
 
   def bitcoin
@@ -31,7 +34,7 @@ class ArticlesScraperService
 
     html_doc.search('.entry-title a').each do |element|
       article_url = element.attribute('href').value
-      if @articles_to_skip.find_index(article_url).nil?
+      if (article_url.start_with?('https://news.bitcoin.com/pr-') == false && @articles_to_skip.find_index(article_url).nil?)
         urls_to_scrape << article_url
       end
     end
@@ -53,7 +56,7 @@ class ArticlesScraperService
       end
       tag_list = article_tags.join(", ")
       html_doc.search("meta[itemprop='datePublished']").each do |element|
-        @publication_date = Date.parse(element.attribute('content').value).to_date
+        @publication_date = element.attribute('content').value.to_datetime
       end
       article = Article.new(
       source: "Bitcoin.com",
@@ -64,12 +67,12 @@ class ArticlesScraperService
       tag_list: tag_list,
       total_views: @total_views
       )
-      article.save!
+      article.save! if article.valid?
     end
   end
 
   def cointelegraph
-    find_articles_to_skip("Coin Telegraph")
+    p find_articles_to_skip("Coin Telegraph")
     urls_to_scrape = []
     html_doc = Nokogiri::HTML(open("https://cointelegraph.com/").read)
     #scrape all URLs from shown articles
@@ -93,7 +96,7 @@ class ArticlesScraperService
         @author = element.text.strip
       end
       html_doc.search('.date').each do |element|
-        @publication_date = Date.parse(element.attribute('datetime').value).to_date
+        @publication_date = element.attribute('datetime').value.to_datetime
       end
       html_doc.search('.tags a').each do |element|
         article_tags << element.text.strip
@@ -114,7 +117,7 @@ class ArticlesScraperService
         tw_count: @tw_count,
         total_views: @total_views
       )
-      article.save!
+      article.save! if article.valid?
     end
   end
 
@@ -140,7 +143,7 @@ class ArticlesScraperService
     urls_to_scrape.each do |url|
       article_tags = []
       browser.goto(url)
-      sleep(25)
+      sleep(30)
       html_doc = Nokogiri::HTML(browser.html)
       html_doc.search('ul.share-bar li.twitter a .count').each do |element|
         @tw_count = element.text.strip.to_i
@@ -151,8 +154,8 @@ class ArticlesScraperService
       html_doc.search('.article-container-lab-name').each do |element|
         @author = element.text.strip
       end
-      html_doc.search('.article-container-left-timestamp').each do |element|
-        @publication_date = element.text.strip
+      html_doc.search("meta[property='article:published_time']").each do |element|
+        @publication_date = element.attribute('content').value.to_datetime
       end
       html_doc.search('.single-tags a').each do |element|
         article_tags << element.text.strip
@@ -167,7 +170,7 @@ class ArticlesScraperService
         tag_list: tag_list,
         tw_count: @tw_count
       )
-      article.save!
+      article.save! if article.valid?
     end
     browser.close
   end

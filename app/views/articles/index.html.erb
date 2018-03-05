@@ -1,26 +1,30 @@
 <div class="container">
-  <%= link_to "Top Articles of the Day", root_path %>
-  <h1>All articles</h1>
+  <h1 class="text-center"><%= link_to "All Articles", articles_path %></h1>
+  <h6 class="text-center"><%= "#{@articles.count} results found" %></h6>
   <table>
     <thead>
       <tr>
+        <th></th>
         <th><%=sortable "source"%></th>
         <th><%=sortable "title"%></th>
+        <th><%= sortable "author" %></th>
         <th><%=sortable "total_views", "Total views"%></th>
         <th><%=sortable "tw_count", "Twitter shares" %></th>
         <th><%=sortable "publication_date","Publication Date"%></th>
-        <th><%= sortable "tag_list", "Tags" %></th>
+        <th>Tags</th>
       </tr>
     </thead>
     <tbody>
-      <% @articles.each do |article| %>
+      <% @articles.each_with_index do |article,index| %>
         <tr>
+          <td class="text-center"><%= index + 1 %> </td>
           <td class="text-center"><%= article.source %></td>
-          <td><%= link_to "#{article.title}", article.url %></td>
-          <td class="text-center"><%= article.total_views %></td>
+          <td><%= link_to "#{article.title}", article.url, target:'_blank' %></td>
+          <td><%= article.author %></td>
+          <td class="text-center"><%= number_with_delimiter(article.total_views, locale: :fr) %></td>
           <td class="text-center"><%= article.tw_count %></td>
-          <td class="text-center"><%= (article.publication_date).strftime("%a, %b %d" ) %></td>
-          <td class="text-center"><%= raw article.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')%></td>
+          <td class="text-center"><%= (article.publication_date).strftime("%a, %b %d at %H:%M" ) %></td>
+          <td class="text-center"><%= raw article.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>

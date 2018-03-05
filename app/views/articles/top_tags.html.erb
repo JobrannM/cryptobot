@@ -1,0 +1,10 @@
+<div class="container">
+  <h1 class="text-center">Top 100 Tags</h1>
+  <div id="tag-cloud">
+    <ol>
+    <% tag_cloud @top_tags, %w[s m l xl] do |tag, css_class| %>
+      <li><%= link_to tag.name, tag_path(tag.name), class: css_class %></li>
+    <% end %>
+    </ol>
+  </div>
+</div>
