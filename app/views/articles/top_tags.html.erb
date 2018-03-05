@@ -1,0 +1,18 @@
+<div class="container">
+  <ul>
+    <li>
+      <%= link_to "Top Articles of the Day", root_path %>
+    </li>
+    <li>
+      <%= link_to "All Articles", articles_path %>
+    </li>
+  </ul>
+  <h1>Top 100 Tags</h1>
+  <div id="tag-cloud">
+    <ol>
+    <% tag_cloud @top_tags, %w[s m l xl] do |tag, css_class| %>
+      <li><%= link_to tag.name, tag_path(tag.name), class: css_class %></li>
+    <% end %>
+    </ol>
+  </div>
+</div>

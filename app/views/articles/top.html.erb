@@ -1,5 +1,12 @@
 <div class="container">
-  <%= link_to "All Articles", articles_path %>
+  <ul>
+    <li>
+      <%= link_to "All Articles", articles_path %>
+    </li>
+    <li>
+      <%= link_to "Top Tags", top_tags_path %>
+    </li>
+  </ul>
   <h1>Top 10 of the Day (<%= (Date.today).strftime("%a, %b %d" ) %>)</h1>
   <table>
     <thead>
@@ -10,6 +17,7 @@
         <th>Total Views</th>
         <th>Twitter shares</th>
         <th>Published at</th>
+        <th>Tags</th>
       </tr>
     </thead>
     <tbody>
@@ -21,6 +29,7 @@
           <td class="text-center"><%= article.total_views %></td>
           <td class="text-center"><%= article.tw_count %></td>
           <td class="text-center"><%= (article.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= raw article.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')%></td>
         </tr>
       <% end %>
     </tbody>
@@ -35,6 +44,7 @@
         <th>Total Views</th>
         <th>Twitter shares</th>
         <th>Published at</th>
+        <th>Tags</th>
       </tr>
     </thead>
     <tbody>
@@ -46,6 +56,7 @@
           <td class="text-center"><%= top_cointelegraph.total_views %></td>
           <td class="text-center"><%= top_cointelegraph.tw_count %></td>
           <td class="text-center"><%= (top_cointelegraph.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= raw top_cointelegraph.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')%></td>
         </tr>
       <% end %>
     </tbody>
@@ -60,6 +71,7 @@
         <th>Total Views</th>
         <th>Twitter shares</th>
         <th>Published at</th>
+        <th>Tags</th>
       </tr>
     </thead>
     <tbody>
@@ -71,6 +83,7 @@
           <td class="text-center"><%= top_bitcoin.total_views %></td>
           <td class="text-center"><%= top_bitcoin.tw_count %></td>
           <td class="text-center"><%= (top_bitcoin.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= raw top_bitcoin.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')%></td>
         </tr>
       <% end %>
     </tbody>
@@ -85,6 +98,7 @@
         <th>Total Views</th>
         <th>Twitter shares</th>
         <th>Published at</th>
+        <th>Tags</th>
       </tr>
     </thead>
     <tbody>
@@ -96,6 +110,7 @@
           <td class="text-center"><%= top_coindesk.total_views %></td>
           <td class="text-center"><%= top_coindesk.tw_count %></td>
           <td class="text-center"><%= (top_coindesk.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= raw top_coindesk.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')%></td>
         </tr>
       <% end %>
     </tbody>
