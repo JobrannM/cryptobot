@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 require 'watir'
+require 'date'
 
 class ArticlesScraperService
   attr_accessor :urls_to_scrape, :article_tags
@@ -9,8 +10,8 @@ class ArticlesScraperService
   end
 
   def perform
-    bitcoin
-    cointelegraph
+    #bitcoin
+    #cointelegraph
     coindesk
   end
 
@@ -53,7 +54,7 @@ class ArticlesScraperService
       end
       tag_list = article_tags.join(", ")
       html_doc.search("meta[itemprop='datePublished']").each do |element|
-        @publication_date = Date.parse(element.attribute('content').value).to_date
+        @publication_date = element.attribute('content').value.to_datetime
       end
       article = Article.new(
       source: "Bitcoin.com",
@@ -93,7 +94,7 @@ class ArticlesScraperService
         @author = element.text.strip
       end
       html_doc.search('.date').each do |element|
-        @publication_date = Date.parse(element.attribute('datetime').value).to_date
+        @publication_date = element.attribute('datetime').value.to_datetime
       end
       html_doc.search('.tags a').each do |element|
         article_tags << element.text.strip
@@ -140,7 +141,7 @@ class ArticlesScraperService
     urls_to_scrape.each do |url|
       article_tags = []
       browser.goto(url)
-      sleep(25)
+      sleep(10)
       html_doc = Nokogiri::HTML(browser.html)
       html_doc.search('ul.share-bar li.twitter a .count').each do |element|
         @tw_count = element.text.strip.to_i
@@ -151,8 +152,8 @@ class ArticlesScraperService
       html_doc.search('.article-container-lab-name').each do |element|
         @author = element.text.strip
       end
-      html_doc.search('.article-container-left-timestamp').each do |element|
-        @publication_date = element.text.strip
+      html_doc.search("meta[property='article:published_time']").each do |element|
+        @publication_date = element.attribute('content').value.to_datetime
       end
       html_doc.search('.single-tags a').each do |element|
         article_tags << element.text.strip

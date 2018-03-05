@@ -1,6 +1,6 @@
 <div class="container">
   <%= link_to "Top Articles of the Day", root_path %>
-  <h1>All articles</h1>
+  <h1><%= link_to "All Articles", articles_path %></h1>
   <table>
     <thead>
       <tr>
@@ -16,10 +16,11 @@
       <% @articles.each do |article| %>
         <tr>
           <td class="text-center"><%= article.source %></td>
-          <td><%= link_to "#{article.title}", article.url %></td>
+          <td><%= link_to "#{article.title}", article.url, target:'_blank' %></td>
+          <td><%= article.author %></td>
           <td class="text-center"><%= article.total_views %></td>
           <td class="text-center"><%= article.tw_count %></td>
-          <td class="text-center"><%= (article.publication_date).strftime("%a, %b %d" ) %></td>
+          <td class="text-center"><%= (article.publication_date).strftime("%a, %b %d at %H:%M" ) %></td>
           <td class="text-center"><%= raw article.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')%></td>
         </tr>
       <% end %>

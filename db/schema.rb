@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180305101339) do
+ActiveRecord::Schema.define(version: 20180305130812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20180305101339) do
     t.string "source"
     t.string "title"
     t.string "author"
-    t.date "publication_date"
+    t.datetime "publication_date"
     t.string "url"
     t.string "tags", default: [], array: true
     t.string "fb_count"

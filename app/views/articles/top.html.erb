@@ -9,6 +9,7 @@
         <th>Title</th>
         <th>Total Views</th>
         <th>Twitter shares</th>
+        <th>Published at</th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
           <td><%= link_to "#{article.title}", article.url %></td>
           <td class="text-center"><%= article.total_views %></td>
           <td class="text-center"><%= article.tw_count %></td>
+          <td class="text-center"><%= (article.publication_date).strftime("%H:%M") %></td>
         </tr>
       <% end %>
     </tbody>
