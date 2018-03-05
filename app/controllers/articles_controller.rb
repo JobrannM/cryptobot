@@ -1,7 +1,9 @@
 class ArticlesController < ApplicationController
 
   def index
-    if params[:sort]
+    if params[:tag]
+      @articles = Article.tagged_with(params[:tag])
+    elsif params[:sort]
       @articles = Article.order(params[:sort] + " " + params[:direction])
     else
       @articles = Article.all.order(publication_date: :desc)

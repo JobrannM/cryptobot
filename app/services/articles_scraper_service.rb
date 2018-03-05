@@ -2,7 +2,6 @@ require 'open-uri'
 require 'nokogiri'
 require 'watir'
 
-
 class ArticlesScraperService
   attr_accessor :urls_to_scrape, :article_tags
 
@@ -20,10 +19,9 @@ class ArticlesScraperService
 
   def find_articles_to_skip(source_to_match)
     @articles_to_skip = []
-    Article.where(source: source_to_match).where(publication_date: 2.days.ago..Date.today).each do |article|
+    Article.where(source: source_to_match).where(publication_date: 7.days.ago..Date.today).each do |article|
       @articles_to_skip << article.url
     end
-    @articles_to_skip
   end
 
   def bitcoin
@@ -53,6 +51,7 @@ class ArticlesScraperService
       html_doc.search('.post .td-post-source-tags a').each do |element|
         article_tags << element.text.strip
       end
+      tag_list = article_tags.join(", ")
       html_doc.search("meta[itemprop='datePublished']").each do |element|
         @publication_date = Date.parse(element.attribute('content').value).to_date
       end
@@ -62,7 +61,7 @@ class ArticlesScraperService
       author: @author,
       publication_date: @publication_date,
       url: url,
-      tags: article_tags,
+      tag_list: tag_list,
       total_views: @total_views
       )
       article.save!
@@ -70,6 +69,7 @@ class ArticlesScraperService
   end
 
   def cointelegraph
+    find_articles_to_skip("Coin Telegraph")
     urls_to_scrape = []
     html_doc = Nokogiri::HTML(open("https://cointelegraph.com/").read)
     #scrape all URLs from shown articles
@@ -98,6 +98,7 @@ class ArticlesScraperService
       html_doc.search('.tags a').each do |element|
         article_tags << element.text.strip
       end
+      tag_list = article_tags.join(", ")
       html_doc.search('.total-views .total-qty').each do |element|
         @total_views = element.text.strip.to_i
       end
@@ -107,7 +108,7 @@ class ArticlesScraperService
         author: @author,
         publication_date: @publication_date,
         url: url,
-        tags: article_tags,
+        tag_list: tag_list,
         fb_count: @fb_count,
         red_count: @red_count,
         tw_count: @tw_count,
@@ -156,13 +157,14 @@ class ArticlesScraperService
       html_doc.search('.single-tags a').each do |element|
         article_tags << element.text.strip
       end
+      tag_list = article_tags.join(", ")
       article = Article.new(
         source: "CoinDesk",
         title: @title,
         author: @author,
         publication_date: @publication_date,
         url: url,
-        tags: article_tags,
+        tag_list: tag_list,
         tw_count: @tw_count
       )
       article.save!

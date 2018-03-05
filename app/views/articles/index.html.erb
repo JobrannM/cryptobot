@@ -9,6 +9,7 @@
         <th><%=sortable "total_views", "Total views"%></th>
         <th><%=sortable "tw_count", "Twitter shares" %></th>
         <th><%=sortable "publication_date","Publication Date"%></th>
+        <th><%= sortable "tag_list", "Tags" %></th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
           <td class="text-center"><%= article.total_views %></td>
           <td class="text-center"><%= article.tw_count %></td>
           <td class="text-center"><%= (article.publication_date).strftime("%a, %b %d" ) %></td>
+          <td class="text-center"><%= raw article.tag_list.map { |t| link_to t, tag_path(t) }.join(', ')%></td>
         </tr>
       <% end %>
     </tbody>
