@@ -1,17 +1,15 @@
-require 'date'
 class ArticlesController < ApplicationController
+  helper_method :sort_column, :sort_direction
 
   def index
     if params[:tag]
       if params[:sort]
-        @articles = Article.tagged_with(params[:tag]).order(params[:sort] + " " + params[:direction])
+        @articles = Article.tagged_with(params[:tag]).order(sort_column + " " + sort_direction)
       else
         @articles = Article.tagged_with(params[:tag])
       end
-    elsif params[:sort]
-      @articles = Article.order(params[:sort] + " " + params[:direction])
-    else
-      @articles = Article.order(publication_date: :desc)
+    else params[:sort]
+      @articles = Article.order(sort_column + " " + sort_direction)
     end
   end
 
@@ -24,6 +22,16 @@ class ArticlesController < ApplicationController
 
   def top_tags
     @top_tags = Article.tag_counts.order(taggings_count: :desc).first(100)
+  end
+
+  private
+
+  def sort_column
+    %w[source title author total_views tw_count publication_date].include?(params[:sort]) ? params[:sort] : "publication_date"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
 end
