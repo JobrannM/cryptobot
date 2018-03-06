@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'watir'
 require 'date'
 require 'pry'
-require 'capybara/rails'
+require 'capybara'
 
 
 class ArticlesScraperService
