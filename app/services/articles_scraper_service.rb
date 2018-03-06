@@ -3,7 +3,6 @@ require 'nokogiri'
 require 'watir'
 require 'date'
 require 'pry'
-require 'chromedriver-helper'
 
 class ArticlesScraperService
   attr_accessor :urls_to_scrape, :article_tags
@@ -73,7 +72,7 @@ class ArticlesScraperService
   end
 
   def cointelegraph
-    p find_articles_to_skip("Coin Telegraph")
+    find_articles_to_skip("Coin Telegraph")
     urls_to_scrape = []
     html_doc = Nokogiri::HTML(open("https://cointelegraph.com/").read)
     #scrape all URLs from shown articles
@@ -140,7 +139,6 @@ class ArticlesScraperService
       end
     end
 
-    Selenium::WebDriver::Chrome.driver_path = ENV['GOOGLE_CHROME_SHIM']
     browser = Watir::Browser.new :chrome, headless: true
     urls_to_scrape.each do |url|
       article_tags = []
