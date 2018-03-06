@@ -9,6 +9,7 @@ ruby '2.3.5'
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass' # Bootstrap v3
 gem 'font-awesome-sass'
+gem "font-awesome-rails"
 # gem 'faker'
 gem 'jquery-rails'
 gem 'watir', '~> 6.10', '>= 6.10.3'
