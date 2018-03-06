@@ -3,6 +3,7 @@ require 'nokogiri'
 require 'watir'
 require 'date'
 require 'pry'
+require 'chromedriver-helper'
 
 class ArticlesScraperService
   attr_accessor :urls_to_scrape, :article_tags
