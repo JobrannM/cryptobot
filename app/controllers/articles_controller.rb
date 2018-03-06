@@ -14,10 +14,10 @@ class ArticlesController < ApplicationController
   end
 
   def top
-    @articles = Article.where(publication_date: Date.today.all_day).order(total_views: :desc).first(10)
-    @top_cointelegraph = Article.where(publication_date:Date.today.all_day).where(source:"Coin Telegraph").order(total_views: :desc).first(5)
-    @top_coindesk = Article.where(publication_date:Date.today.all_day).where(source:"CoinDesk").order(tw_count: :desc).first(5)
-    @top_bitcoin = Article.where(publication_date:Date.today.all_day).where(source:"Bitcoin.com").order(total_views: :desc).first(5)
+    @articles = Article.where(publication_date: DateTime.now-1..DateTime.now).order(total_views: :desc).first(10)
+    @top_cointelegraph = Article.where(publication_date:DateTime.now-1..DateTime.now).where(source:"Coin Telegraph").order(total_views: :desc).first(5)
+    @top_coindesk = Article.where(publication_date:DateTime.now-1..DateTime.now).where(source:"CoinDesk").order(tw_count: :desc).first(5)
+    @top_bitcoin = Article.where(publication_date:DateTime.now-1..DateTime.now).where(source:"Bitcoin.com").order(total_views: :desc).first(5)
   end
 
   def top_tags
