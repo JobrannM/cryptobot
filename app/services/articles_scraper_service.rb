@@ -1,9 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
-require 'watir'
-require 'date'
 require 'pry'
-require 'capybara'
 
 
 class ArticlesScraperService
@@ -155,7 +152,7 @@ class ArticlesScraperService
     urls_to_scrape.each do |url|
       article_tags = []
       browser.visit url
-      sleep(30)
+      #sleep(30)
       html_doc = Nokogiri::HTML(browser.html)
       html_doc.search('ul.share-bar li.twitter a .count').each do |element|
         @tw_count = element.text.strip.to_i

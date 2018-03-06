@@ -12,9 +12,10 @@ gem 'font-awesome-sass'
 gem "font-awesome-rails"
 # gem 'faker'
 gem 'jquery-rails'
-gem 'watir', '~> 6.10', '>= 6.10.3'
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'pry'
+gem 'capybara', '~> 2.15.1'
+gem 'selenium-webdriver', '~> 3.5.1'
 gem 'chromedriver-helper'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
@@ -49,8 +50,8 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
+  gem 'capybara', '~> 2.15.1'
+  gem 'selenium-webdriver', '~> 3.5.1'
 end
 
 group :development do
