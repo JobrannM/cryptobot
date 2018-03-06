@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="text-center">Top 10 - Past 24 Hours (<%= (Date.today).strftime("%a, %b %d" ) %>)</h1>
+  <h1 class="text-center">Top 20 - Past 24 Hours (<%= (Date.today).strftime("%a, %b %d" ) %>)</h1>
   <table>
     <thead>
       <tr>
@@ -17,17 +17,17 @@
         <tr>
           <td class="text-center"><%= index + 1 %></td>
           <td class="text-center"><%= article.source %></td>
-          <td><%= link_to "#{article.title}", article.url %></td>
+          <td><%= link_to "#{article.title}", article.url, target:'_blank' %></td>
           <td class="text-center"><%= number_with_delimiter(article.total_views) %></td>
           <td class="text-center"><%= number_with_delimiter(article.tw_count) %></td>
-          <td class="text-center"><%= (article.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= distance_of_time_in_words(DateTime.now, article.publication_date, scope: 'datetime.distance_in_words.short') %></td>
           <td class="text-center"><%= raw article.tag_list.map { |t| link_to t, tag_path(t), class:
             'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <h1 class="text-center">Top 5 on Coin Telegraph</h1>
+  <h1 class="text-center">Top 10 on Coin Telegraph</h1>
   <table>
     <thead>
       <tr>
@@ -43,16 +43,16 @@
       <% @top_cointelegraph.each_with_index do |top_cointelegraph,index| %>
         <tr>
           <td class="text-center"><%= index + 1 %></td>
-          <td><%= link_to "#{top_cointelegraph.title}", top_cointelegraph.url %></td>
+          <td><%= link_to "#{top_cointelegraph.title}", top_cointelegraph.url, target:'_blank' %></td>
           <td class="text-center"><%= number_with_delimiter(top_cointelegraph.total_views) %></td>
           <td class="text-center"><%= number_with_delimiter(top_cointelegraph.tw_count) %></td>
-          <td class="text-center"><%= (top_cointelegraph.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= distance_of_time_in_words(DateTime.now, top_cointelegraph.publication_date, scope: 'datetime.distance_in_words.short') %></td>
           <td class="text-center"><%= raw top_cointelegraph.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <h1 class="text-center">Top 5 on Bitcoin.com</h1>
+  <h1 class="text-center">Top 10 on Bitcoin.com</h1>
   <table>
     <thead>
       <tr>
@@ -68,16 +68,16 @@
       <% @top_bitcoin.each_with_index do |top_bitcoin,index| %>
         <tr>
           <td class="text-center"><%= index + 1 %></td>
-          <td><%= link_to "#{top_bitcoin.title}", top_bitcoin.url %></td>
+          <td><%= link_to "#{top_bitcoin.title}", top_bitcoin.url, target:'_blank' %></td>
           <td class="text-center"><%= number_with_delimiter(top_bitcoin.total_views) %></td>
           <td class="text-center"><%= number_with_delimiter(top_bitcoin.tw_count) %></td>
-          <td class="text-center"><%= (top_bitcoin.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= distance_of_time_in_words(DateTime.now, top_bitcoin.publication_date, scope: 'datetime.distance_in_words.short') %></td>
           <td class="text-center"><%= raw top_bitcoin.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <h1 class="text-center">Top 5 on CoinDesk</h1>
+  <h1 class="text-center">Top 10 on CoinDesk</h1>
   <table>
     <thead>
       <tr>
@@ -93,10 +93,10 @@
       <% @top_coindesk.each_with_index do |top_coindesk,index| %>
         <tr>
           <td class="text-center"><%= index + 1 %></td>
-          <td><%= link_to "#{top_coindesk.title}", top_coindesk.url %></td>
+          <td><%= link_to "#{top_coindesk.title}", top_coindesk.url, target:'_blank' %></td>
           <td class="text-center"><%= number_with_delimiter(top_coindesk.total_views) %></td>
           <td class="text-center"><%= number_with_delimiter(top_coindesk.tw_count) %></td>
-          <td class="text-center"><%= (top_coindesk.publication_date).strftime("%H:%M") %></td>
+          <td class="text-center"><%= distance_of_time_in_words(DateTime.now, top_coindesk.publication_date, scope: 'datetime.distance_in_words.short') %></td>
           <td class="text-center"><%= raw top_coindesk.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>

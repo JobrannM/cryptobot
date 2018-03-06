@@ -10,8 +10,8 @@ class ArticlesScraperService
   end
 
   def perform
-    #bitcoin
-    #cointelegraph
+    bitcoin
+    cointelegraph
     coindesk
   end
 
@@ -80,7 +80,6 @@ class ArticlesScraperService
     find_articles_to_skip("Coin Telegraph")
     urls_to_scrape = []
     html_doc = Nokogiri::HTML(open("https://cointelegraph.com/").read)
-    #scrape all URLs from shown articles
     html_doc.search('.posts .post .image a').each do |element|
       article_url = element.attribute('href').value
       if @articles_to_skip.find_index(article_url).nil?
@@ -159,7 +158,7 @@ class ArticlesScraperService
     urls_to_scrape.each do |url|
       article_tags = []
       browser.visit url
-      #sleep(30)
+      sleep(10)
       html_doc = Nokogiri::HTML(browser.html)
       html_doc.search('ul.share-bar li.twitter a .count').each do |element|
         @tw_count = element.text.strip.to_i
