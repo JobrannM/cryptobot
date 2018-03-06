@@ -11,8 +11,8 @@ class ArticlesScraperService
   end
 
   def perform
-    bitcoin
-    cointelegraph
+    #bitcoin
+    #cointelegraph
     coindesk
   end
 
@@ -25,6 +25,12 @@ class ArticlesScraperService
       @articles_to_skip << article.url
     end
     @articles_to_skip
+  end
+
+  def quit_capybara(browser)
+    browser.reset_session!
+    browser.driver.quit
+    browser = nil
   end
 
   def bitcoin
@@ -139,10 +145,14 @@ class ArticlesScraperService
       end
     end
 
-    browser = Watir::Browser.new :chrome, headless: true
+    Capybara.register_driver :selenium do |app|
+      Capybara::Selenium::Driver.new(app, browser: :chrome)
+    end
+    Capybara.default_driver = :selenium
+    browser = Capybara.current_session
     urls_to_scrape.each do |url|
       article_tags = []
-      browser.goto(url)
+      browser.visit url
       sleep(30)
       html_doc = Nokogiri::HTML(browser.html)
       html_doc.search('ul.share-bar li.twitter a .count').each do |element|
@@ -172,7 +182,9 @@ class ArticlesScraperService
       )
       article.save! if article.valid?
     end
-    browser.close
+    quit_capybara(browser)
   end
+
+
 
 end
