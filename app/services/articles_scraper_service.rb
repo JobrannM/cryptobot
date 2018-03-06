@@ -3,6 +3,8 @@ require 'nokogiri'
 require 'watir'
 require 'date'
 require 'pry'
+require 'capybara/rails'
+
 
 class ArticlesScraperService
   attr_accessor :urls_to_scrape, :article_tags
