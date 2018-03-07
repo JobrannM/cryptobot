@@ -17,14 +17,14 @@
     <tbody>
       <% @articles.each_with_index do |article,index| %>
         <tr>
-          <td class="text-center"><%= index + 1 %> </td>
+          <td class="text-center rank"><%= index + 1 %> </td>
           <td class="text-center"><%= article.source %></td>
           <td><%= link_to "#{article.title}", article.url, target:'_blank' %></td>
           <td><%= article.author %></td>
-          <td class="text-center"><%= number_with_delimiter(article.total_views) %></td>
-          <td class="text-center"><%= article.tw_count %></td>
-          <td class="text-center"><%= distance_of_time_in_words(DateTime.now, article.publication_date, scope: 'datetime.distance_in_words.short') %> ago</td>
-          <td class="text-center"><%= raw article.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
+          <td class="text-center stats"><%= number_with_delimiter(article.total_views) %></td>
+          <td class="text-center stats"><%= article.tw_count %></td>
+          <td class="text-center stats"><%= distance_of_time_in_words(DateTime.now, article.publication_date, scope: 'datetime.distance_in_words.short') %> ago</td>
+          <td class="text-center tags"><%= raw article.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>

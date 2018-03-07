@@ -1,10 +1,9 @@
 <div class="container">
-  <h1 class="text-center">Top 20 - Past 24 Hours (<%= (Date.today).strftime("%a, %b %d" ) %>)</h1>
+  <h3 class="text-center bold">Top 20 - Past 24 Hours (<%= (Date.today).strftime("%a, %b %d" ) %>)</h3>
   <table>
     <thead>
       <tr>
         <th>Rank</th>
-        <th>Source</th>
         <th>Title</th>
         <th><i class="fas fa-eye"></i></th>
         <th><i class="fab fa-twitter"></i></th>
@@ -15,19 +14,35 @@
     <tbody>
       <% @articles.each_with_index do |article,index| %>
         <tr>
-          <td class="text-center"><%= index + 1 %></td>
-          <td class="text-center"><%= article.source %></td>
-          <td><%= link_to "#{article.title}", article.url, target:'_blank' %></td>
-          <td class="text-center"><%= number_with_delimiter(article.total_views) %></td>
-          <td class="text-center"><%= number_with_delimiter(article.tw_count) %></td>
-          <td class="text-center"><%= distance_of_time_in_words(DateTime.now, article.publication_date, scope: 'datetime.distance_in_words.short') %></td>
-          <td class="text-center"><%= raw article.tag_list.map { |t| link_to t, tag_path(t), class:
+          <% if article.status == "New" %>
+            <td class="text-center">
+              <div class="ranking-box">
+                <span class="rank"> <%= index + 1 %> </span>
+                <span class="status-new"> <%= article.status.upcase %> </span>
+              </div>
+            </td>
+          <% else %>
+            <td class="text-center">
+              <span class="rank"><%= index + 1 %></span>
+            </td>
+          <% end %>
+          <td>
+            <div id="title-box">
+              <%= link_to "#{article.title}", article.url, target:'_blank' %>
+              <span id="source-span"><%= article.source %></span>
+            </div>
+          </td>
+
+          <td class="text-center stats"><%= number_with_delimiter(article.total_views) %></td>
+          <td class="text-center stats"><%= number_with_delimiter(article.tw_count) %></td>
+          <td class="text-center stats"><%= distance_of_time_in_words(DateTime.now, article.publication_date, scope: 'datetime.distance_in_words.short') %></td>
+          <td class="text-center tags"><%= raw article.tag_list.sample(8).sort.map { |t| link_to t, tag_path(t), class:
             'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <h1 class="text-center">Top 10 on Coin Telegraph</h1>
+  <h3 class="text-center bold">Top 10 on Coin Telegraph</h3>
   <table>
     <thead>
       <tr>
@@ -42,17 +57,33 @@
     <tbody>
       <% @top_cointelegraph.each_with_index do |top_cointelegraph,index| %>
         <tr>
-          <td class="text-center"><%= index + 1 %></td>
-          <td><%= link_to "#{top_cointelegraph.title}", top_cointelegraph.url, target:'_blank' %></td>
-          <td class="text-center"><%= number_with_delimiter(top_cointelegraph.total_views) %></td>
-          <td class="text-center"><%= number_with_delimiter(top_cointelegraph.tw_count) %></td>
-          <td class="text-center"><%= distance_of_time_in_words(DateTime.now, top_cointelegraph.publication_date, scope: 'datetime.distance_in_words.short') %></td>
-          <td class="text-center"><%= raw top_cointelegraph.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
+          <% if top_cointelegraph.status == "New" %>
+            <td class="text-center">
+              <div class="ranking-box">
+                <span class="rank"> <%= index + 1 %> </span>
+                <span class="status-new"> <%= top_cointelegraph.status.upcase %> </span>
+              </div>
+            </td>
+          <% else %>
+            <td class="text-center">
+              <span class="rank"><%= index + 1 %></span>
+            </td>
+          <% end %>
+          <td>
+            <div id="title-box">
+               <%= link_to "#{top_cointelegraph.title}", top_cointelegraph.url, target:'_blank' %>
+              <span id="source-span"><%= top_cointelegraph.source %></span>
+            </div>
+           </td>
+          <td class="text-center stats"><%= number_with_delimiter(top_cointelegraph.total_views) %></td>
+          <td class="text-center stats"><%= number_with_delimiter(top_cointelegraph.tw_count) %></td>
+          <td class="text-center stats"><%= distance_of_time_in_words(DateTime.now, top_cointelegraph.publication_date, scope: 'datetime.distance_in_words.short') %></td>
+          <td class="text-center tags"><%= raw top_cointelegraph.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <h1 class="text-center">Top 10 on Bitcoin.com</h1>
+  <h3 class="text-center bold">Top 10 on Bitcoin.com</h3>
   <table>
     <thead>
       <tr>
@@ -67,17 +98,33 @@
     <tbody>
       <% @top_bitcoin.each_with_index do |top_bitcoin,index| %>
         <tr>
-          <td class="text-center"><%= index + 1 %></td>
-          <td><%= link_to "#{top_bitcoin.title}", top_bitcoin.url, target:'_blank' %></td>
-          <td class="text-center"><%= number_with_delimiter(top_bitcoin.total_views) %></td>
-          <td class="text-center"><%= number_with_delimiter(top_bitcoin.tw_count) %></td>
-          <td class="text-center"><%= distance_of_time_in_words(DateTime.now, top_bitcoin.publication_date, scope: 'datetime.distance_in_words.short') %></td>
-          <td class="text-center"><%= raw top_bitcoin.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
+          <% if top_bitcoin.status == "New" %>
+            <td class="text-center">
+              <div class="ranking-box">
+                <span class="rank"> <%= index + 1 %> </span>
+                <span class="status-new"> <%= top_bitcoin.status.upcase %> </span>
+              </div>
+            </td>
+          <% else %>
+            <td class="text-center">
+              <span class="rank"><%= index + 1 %></span>
+            </td>
+          <% end %>
+          <td>
+            <div id="title-box">
+              <%= link_to "#{top_bitcoin.title}", top_bitcoin.url, target:'_blank' %>
+              <span id="source-span"><%= top_bitcoin.source %></span>
+            </div>
+          </td>
+          <td class="text-center stats"><%= number_with_delimiter(top_bitcoin.total_views) %></td>
+          <td class="text-center stats"><%= number_with_delimiter(top_bitcoin.tw_count) %></td>
+          <td class="text-center stats"><%= distance_of_time_in_words(DateTime.now, top_bitcoin.publication_date, scope: 'datetime.distance_in_words.short') %></td>
+          <td class="text-center tags"><%= raw top_bitcoin.tag_list.sample(8).sort.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <h1 class="text-center">Top 10 on CoinDesk</h1>
+  <h3 class="text-center bold">Top 10 on CoinDesk</h3>
   <table>
     <thead>
       <tr>
@@ -92,12 +139,28 @@
     <tbody>
       <% @top_coindesk.each_with_index do |top_coindesk,index| %>
         <tr>
-          <td class="text-center"><%= index + 1 %></td>
-          <td><%= link_to "#{top_coindesk.title}", top_coindesk.url, target:'_blank' %></td>
-          <td class="text-center"><%= number_with_delimiter(top_coindesk.total_views) %></td>
-          <td class="text-center"><%= number_with_delimiter(top_coindesk.tw_count) %></td>
-          <td class="text-center"><%= distance_of_time_in_words(DateTime.now, top_coindesk.publication_date, scope: 'datetime.distance_in_words.short') %></td>
-          <td class="text-center"><%= raw top_coindesk.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
+          <% if top_coindesk.status == "New" %>
+            <td class="text-center">
+              <div class="ranking-box">
+                <span class="rank"> <%= index + 1 %> </span>
+                <span class="status-new"> <%= top_coindesk.status.upcase %> </span>
+              </div>
+            </td>
+          <% else %>
+            <td class="text-center">
+              <span class="rank"><%= index + 1 %></span>
+            </td>
+          <% end %>
+          <td>
+            <div id="title-box">
+              <%= link_to "#{top_coindesk.title}", top_coindesk.url, target:'_blank' %>
+              <span id="source-span"><%= top_coindesk.source %></span>
+            </div>
+          </td>
+          <td class="text-center stats"><%= number_with_delimiter(top_coindesk.total_views) %></td>
+          <td class="text-center stats"><%= number_with_delimiter(top_coindesk.tw_count) %></td>
+          <td class="text-center stats"><%= distance_of_time_in_words(DateTime.now, top_coindesk.publication_date, scope: 'datetime.distance_in_words.short') %></td>
+          <td class="text-center tags"><%= raw top_coindesk.tag_list.map { |t| link_to t, tag_path(t), class: 'tag_link' }.join(' ')%></td>
         </tr>
       <% end %>
     </tbody>

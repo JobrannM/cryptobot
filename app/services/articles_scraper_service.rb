@@ -10,12 +10,19 @@ class ArticlesScraperService
   end
 
   def perform
+    archive
     bitcoin
     cointelegraph
     coindesk
   end
 
   private
+
+  def archive
+    Article.where(status: "New").each do |article|
+      article.update_attribute('status', "Archived")
+    end
+  end
 
 
   def find_articles_to_skip(source_to_match)
@@ -70,7 +77,8 @@ class ArticlesScraperService
       publication_date: @publication_date,
       url: url,
       tag_list: tag_list,
-      total_views: @total_views
+      total_views: @total_views,
+      status:"New"
       )
       article.save! if article.valid?
     end
@@ -119,7 +127,8 @@ class ArticlesScraperService
         fb_count: @fb_count,
         red_count: @red_count,
         tw_count: @tw_count,
-        total_views: @total_views
+        total_views: @total_views,
+        status:"New"
       )
       article.save! if article.valid?
     end
@@ -183,7 +192,8 @@ class ArticlesScraperService
         publication_date: @publication_date,
         url: url,
         tag_list: tag_list,
-        tw_count: @tw_count
+        tw_count: @tw_count,
+        status:"New"
       )
       article.save! if article.valid?
     end

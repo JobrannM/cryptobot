@@ -4,6 +4,7 @@
 
 table {
   background-color: white;
+  table-layout: fixed;
 }
 
 th, th > a {
@@ -25,11 +26,43 @@ tr {
   padding: 5px 0px;
 }
 
+.stats {
+  width: 7%;
+  font-weight: 500;
+}
+
+.tags {
+  width:30%;
+}
+
+
+.ranking-box {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+.rank{
+  font-size:20px;
+  font-weight:bold;
+}
+.status-new {
+  font-size: 0.5em;
+  color: white;
+  background-color: green;
+}
+
+#title-box {
+  display: flex;
+  flex-direction: column;
+}
+#source-span{
+  font-size: 0.6em;
+}
+
 #tag_cloud {
   width: 200px;
   line-height: 1.6em;
-
-};
+}
 
 
 .tag_link {
@@ -38,6 +71,7 @@ tr {
     border-radius: 2px;
     margin: 5px 0px;
     color: #408bfe;
+    font-size:0.7em;
 }
 .tag_link:hover{
   border-bottom: 1px solid #408bfe;
