@@ -10,9 +10,9 @@ class ArticlesScraperService
   end
 
   def perform
-    archive
-    bitcoin
-    cointelegraph
+    #archive
+    #bitcoin
+    #cointelegraph
     coindesk
   end
 
@@ -152,6 +152,7 @@ class ArticlesScraperService
         urls_to_scrape << article_url
       end
     end
+    p urls_to_scrape
 
     chrome_bin = ENV.fetch('GOOGLE_CHROME_SHIM', nil)
     options = {}
@@ -168,7 +169,7 @@ class ArticlesScraperService
     urls_to_scrape.each do |url|
       article_tags = []
       browser.visit url
-      sleep(5)
+      sleep(30)
       html_doc = Nokogiri::HTML(browser.html)
       html_doc.search('ul.share-bar li.twitter a .count').each do |element|
         @tw_count = element.text.strip.to_i
