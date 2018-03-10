@@ -90,9 +90,10 @@ class ArticlesScraperService
     html_doc = Nokogiri::HTML(open("https://cointelegraph.com/").read)
     html_doc.search('.posts .post .image a').each do |element|
       article_url = element.attribute('href').value
-      if @articles_to_skip.find_index(article_url).nil?
+      if (article_url.start_with?('https://cointelegraph.com/news')) && @articles_to_skip.find_index(article_url).nil?
         urls_to_scrape << article_url
       end
+      urls_to_scrape
     end
 
     urls_to_scrape.each do |url|
@@ -167,7 +168,7 @@ class ArticlesScraperService
     urls_to_scrape.each do |url|
       article_tags = []
       browser.visit url
-      sleep(10)
+      sleep(5)
       html_doc = Nokogiri::HTML(browser.html)
       html_doc.search('ul.share-bar li.twitter a .count').each do |element|
         @tw_count = element.text.strip.to_i
