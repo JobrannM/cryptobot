@@ -10,9 +10,9 @@ class ArticlesScraperService
   end
 
   def perform
-    #archive
-    #bitcoin
-    #cointelegraph
+    archive
+    bitcoin
+    cointelegraph
     coindesk
   end
 
